@@ -1,0 +1,65 @@
+**Function to Calculate Factorial**
+=====================================
+
+### Description
+
+This function calculates the factorial of a given integer `n`. The factorial of a non-negative integer `n` is the product of all positive integers less than or equal to `n`.
+
+### Code
+```python
+def factorial(n: int) -> int:
+    """
+    Calculate the factorial of a given integer.
+
+    Args:
+        n (int): A non-negative integer.
+
+    Returns:
+        int: The factorial of n.
+
+    Raises:
+        ValueError: If n is a negative integer.
+    """
+    if not isinstance(n, int):
+        raise TypeError("Input must be an integer.")
+    if n < 0:
+        raise ValueError("Input must be a non-negative integer.")
+
+    # Base case: factorial of 0 or 1 is 1
+    if n == 0 or n == 1:
+        return 1
+
+    # Initialize the result variable to 1
+    result = 1
+
+    # Iterate from 2 to n (inclusive)
+    for i in range(2, n + 1):
+        # Multiply the result by the current number
+        result *= i
+
+    return result
+```
+
+### Example Use Cases
+```python
+# Calculate the factorial of 5
+print(factorial(5))  # Output: 120
+
+# Attempt to calculate the factorial of a negative integer
+try:
+    print(factorial(-3))
+except ValueError as e:
+    print(e)  # Output: Input must be a non-negative integer.
+
+# Attempt to calculate the factorial of a non-integer input
+try:
+    print(factorial(3.5))
+except TypeError as e:
+    print(e)  # Output: Input must be an integer.
+```
+
+### Advice
+
+* This function uses a simple iterative approach to calculate the factorial, which is efficient for small to medium-sized inputs.
+* The function raises informative error messages when invalid input is provided, making it easier to detect and handle errors in production code.
+* The code includes type hints for the input parameter `n` and return value, as well as docstrings to provide a description of the function's behavior.
