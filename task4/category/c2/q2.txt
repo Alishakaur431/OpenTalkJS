@@ -1,0 +1,1 @@
+Create API documentation for a weather forecasting application that provides real-time weather data.
