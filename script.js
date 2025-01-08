@@ -15,25 +15,33 @@
 
 // runChat();
 
-//stage2
+//stage 2 
+import ollama from "ollama"
+import fs from "fs"
 
-import ollama from "ollama";
-import fs from "fs";
-
-let q= fs.readFileSync("./q.txt", "utf-8");
-console.log(q)
-
-askQuestion()
-async function askQuestion() {
-  try {
-    const response = await ollama.chat({
-      model: "llama3.2:1b",
-      messages: [{ role: 'user', content: q }]
-    });
-
-    fs.writeFileSync("./a.txt", response.message.content);
-
-  } catch (error) {
-    console.error("Error occurred:", error.message);
-  }
+const getAnswer = (question) => {
+  return ollama.chat({
+    model: "llama3.2:1b ",
+    messages: [{ role: "user", content: question }]
+  })
 }
+
+fs.readFile("./q.txt", "utf-8", (err, question) => {
+  if (err) {
+    return console.error("Error reading file:", err.message)
+  }
+
+  getAnswer(question)
+    .then((response) => {
+      fs.writeFile("./a.txt", response.message.content, (err) => {
+        if (err) {
+          console.error("Error writing file:", err.message)
+        } else {
+          console.log("Response saved to a.txt")
+        }
+      })
+    })
+    .catch((error) => {
+      console.error("Error in LLM chat:", error.message)
+    })
+})
